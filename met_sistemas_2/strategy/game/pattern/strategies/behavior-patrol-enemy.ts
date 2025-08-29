@@ -6,9 +6,9 @@ import {
     scaleVector,
     addVectors,
 } from "../shared/types";
-import { BehaviorEnemy } from "./behavior-enemy";
+import { EnemyBehavior } from "./enemy-behavior";
 
-export class BehaviorPatrolEnemy implements BehaviorEnemy {
+export class EnemyPatrolBehavior implements EnemyBehavior {
     private patrolWaypoints: Point[] = [
         { x: 20, y: 20 },
         { x: 120, y: 20 },

@@ -1,7 +1,7 @@
 import { Point } from "../shared/types";
-import { BehaviorEnemy } from "./behavior-enemy";
+import { EnemyBehavior } from "./enemy-behavior";
 
-export class BehaviorIdleEnemy implements BehaviorEnemy {
+export class EnemyIdleBehavior implements EnemyBehavior {
     newPosition(position: Point): Point {
         return position;
     }

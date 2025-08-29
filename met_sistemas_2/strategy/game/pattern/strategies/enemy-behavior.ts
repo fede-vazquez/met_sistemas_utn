@@ -1,6 +1,6 @@
 import { Point } from "../shared/types";
 
-export interface BehaviorEnemy {
+export interface EnemyBehavior {
     newPosition(
         position: Point,
         speed: number,

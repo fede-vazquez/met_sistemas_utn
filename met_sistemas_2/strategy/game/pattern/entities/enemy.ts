@@ -8,10 +8,10 @@ import {
 import { World } from "../engine/world";
 import { Player } from "./player";
 
-import { BehaviorEnemy } from "../strategies/behavior-enemy";
-import { BehaviorIdleEnemy } from "../strategies/behavior-idle-enemy";
-import { BehaviorChaseEnemy } from "../strategies/behavior-chase-enemy";
-import { BehaviorPatrolEnemy } from "../strategies/behavior-patrol-enemy";
+import { EnemyBehavior } from "../strategies/enemy-behavior";
+import { EnemyIdleBehavior } from "../strategies/behavior-idle-enemy";
+import { EnemyChaseBehavior } from "../strategies/behavior-chase-enemy";
+import { EnemyPatrolBehavior } from "../strategies/behavior-patrol-enemy";
 
 export class Enemy {
     position: Point = { x: 80, y: 60 };
@@ -19,9 +19,9 @@ export class Enemy {
 
     private timeAccum: number = 0;
 
-    private behaviorMode: BehaviorEnemy = new BehaviorPatrolEnemy();
+    private behaviorMode: EnemyBehavior = new EnemyPatrolBehavior();
 
-    changeBehaviorMode(newBehavior: BehaviorEnemy) {
+    changeBehaviorMode(newBehavior: EnemyBehavior) {
         this.behaviorMode = newBehavior;
     }
 
@@ -53,10 +53,10 @@ export class Enemy {
         // Alterna entre idle y patrol cada ~6s (a modo de ejemplo)
         if (this.timeAccum > 6) {
             this.timeAccum = 0;
-            if (typeof this.behaviorMode == typeof BehaviorIdleEnemy) {
-                this.changeBehaviorMode(new BehaviorPatrolEnemy());
-            } else if (typeof this.behaviorMode == typeof BehaviorPatrolEnemy) {
-                this.changeBehaviorMode(new BehaviorIdleEnemy());
+            if (typeof this.behaviorMode == typeof EnemyIdleBehavior) {
+                this.changeBehaviorMode(new EnemyPatrolBehavior());
+            } else if (typeof this.behaviorMode == typeof EnemyPatrolBehavior) {
+                this.changeBehaviorMode(new EnemyIdleBehavior());
             }
         }
     }
@@ -67,18 +67,18 @@ export class Enemy {
         );
         const isNear = distanceToPlayer < 40;
 
-        if (isNear && typeof this.behaviorMode !== typeof BehaviorChaseEnemy) {
-            this.changeBehaviorMode(new BehaviorChaseEnemy());
+        if (isNear && typeof this.behaviorMode !== typeof EnemyChaseBehavior) {
+            this.changeBehaviorMode(new EnemyChaseBehavior());
         }
 
         // Si está lejos por un rato, vuelve a patrullar
         if (
             !isNear &&
             this.timeAccum > 3 &&
-            typeof this.behaviorMode === typeof BehaviorChaseEnemy
+            typeof this.behaviorMode === typeof EnemyChaseBehavior
         ) {
             this.timeAccum = 0;
-            this.changeBehaviorMode(new BehaviorPatrolEnemy());
+            this.changeBehaviorMode(new EnemyPatrolBehavior());
         }
     }
 }

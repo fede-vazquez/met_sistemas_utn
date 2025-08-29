@@ -5,9 +5,9 @@ import {
     addVectors,
     scaleVector,
 } from "../shared/types";
-import { BehaviorEnemy } from "./behavior-enemy";
+import { EnemyBehavior } from "./enemy-behavior";
 
-export class BehaviorChaseEnemy implements BehaviorEnemy {
+export class EnemyChaseBehavior implements EnemyBehavior {
     newPosition(
         position: Point,
         speed: number,
