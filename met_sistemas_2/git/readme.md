@@ -1,57 +1,149 @@
-# GIT - Sistema de control de versiones
+# GIT – Sistema de control de versiones
 
--   Controlador de cambios en el código
--   Trabajar en equipo
--   Trabajar en remoto
--   Recuperar versiones anteriores
--   Almacenar código
--   Comprobar si es seguro
--   Distribuir versiones
+Git es un **sistema de control de versiones distribuido (DVCS)** que permite llevar un historial completo de un proyecto, trabajar en equipo y mantener la integridad del código.
+
+## Características principales
+
+-   Controla los cambios en el código de manera eficiente.
+-   Permite trabajar en equipo sin conflictos.
+-   Facilita el trabajo en remoto (repositorios distribuidos).
+-   Permite recuperar versiones anteriores del proyecto.
+-   Almacena todo el código y su historial de forma segura.
+-   Garantiza la integridad de los archivos mediante hashes.
+-   Soporta flujos de trabajo distribuidos y ramas livianas.
 
 # Sistemas de control de versiones (SVC)
 
-Están los que son centralizados (el sistema está en un servidor) y el distribuido (el sistema se copia en cada terminal que se utiliza)
+Los SVC se clasifican en:
 
-El SVC distribuido se utiliza en los sistemas de **software libre**.
+1. **Centralizados (CVCS):**
 
-# Areas de GIT
+    - El repositorio está en un servidor central.
+    - Problema: punto único de fallo y dependencia de la red.
 
-## Working directory
+2. **Distribuidos (DVCS):**
 
-Donde trabajas, eliminas, creas, cambias archivos, etc.
+    - Cada usuario tiene una copia completa del repositorio y su historial.
+    - Uso común en **software libre** y proyectos con muchos colaboradores.
 
-## Staging
+# Áreas de Git
 
-Donde preparas los archivos para persistir.
+Git organiza el flujo de trabajo en tres áreas principales:
 
-## Repository
+1. **Working Directory (directorio de trabajo):**
 
-Es la carpeta .git, donde se guardan las "fotos" del repo.
+    - Donde modificas, creas o eliminas archivos.
+    - Ejemplo: editas `index.html` en tu computadora.
 
-# Como funciona GIT
+2. **Staging Area (índice o área de preparación):**
 
-Cuando tenemos un archivo, lo que hace es implementar un hash al mismo.
+    - Donde seleccionas los cambios que quieres guardar en el próximo commit.
+    - Comando: `git add archivo.txt`.
 
-# Tipos de objetos en GIT
+3. **Repository (repositorio):**
 
-Cuando GIT hace el hash del archivo, le pone un tipo.
+    - Carpeta `.git/` donde Git guarda las “fotografías” del proyecto (commits, árboles y blobs).
 
-BLOB: Son archivos en general, sin importar la extensión.
-TREE: Son las carpetas, es un tipo que tiene otros tipos adentro, ya sean blobs o trees.
-COMMIT: Son las "fotos" del árbol global del repositorio.
+# Cómo funciona Git internamente
 
-# Comandos
+-   Cada archivo que agregas a Git recibe un **hash SHA-1** único basado en su contenido.
+-   Git almacena **objetos inmutables** que representan archivos, carpetas y commits completos del proyecto.
 
--   git hash-object -w archivo: Genera un hash de tipo BLOB.
--   git update-index --add --cacheinfo 001000 hash nombreArchivo: Actualiza el index (es el staging)
-    En caso de poner un archivo dentro de una ruta, por ejemplo: src/archivo, GIT va a crear el TREE automáticamente.
--   git write-tree: Genera hash del index actual.
--   git cat-file -p hash: Inspecciona el hash.
+# Tipos de objetos en Git
 
-# Referencias
+Perfecto, Fede. Te agrego cómo se **ven internamente** estos objetos en Git y cómo se relacionan entre sí:
 
-Una rama es una referencia a un commit, la referencia en lugar de ser un hash se usa lenguaje naturales.
+---
 
-HEAD: Un puntero que apunta al puntero que estas actualmente. Contiene el nombre de la rama actual
+# Tipos de objetos en Git y su estructura
 
-TAGS: Son punteros que apuntan a un commit, y no es cambiable.
+## 1️⃣ Blob
+
+-   **Qué representa:** un archivo individual (cualquier extensión).
+-   **Contenido:** solo guarda los datos del archivo, **no el nombre ni la ruta**.
+-   **Hash:** SHA-1 basado en el contenido del archivo.
+-   **Ejemplo visual:**
+
+```
+hash: f30ab...
+```
+
+---
+
+## 2️⃣ Tree
+
+-   **Qué representa:** un directorio.
+-   **Contenido:** referencias a blobs (archivos) y a otros trees (subdirectorios).
+-   **Incluye:** permisos, nombres de archivos y hashes de los objetos que contiene.
+-   **Ejemplo visual:**
+
+```
+Tree hash: a1b2c3...
+├─ 100644 blob f30abf3c3a5f2d7e9b9d0b8f8c0a123456789abc index.html
+├─ 100644 blob f30abf3c3a5f2d7e9b9d0b8f8c0a123456789abc index.html
+├─ 100644 tree f30abf3c3a5f2d7e9b9d0b8f8c0a123456789abc src
+```
+
+## Commit
+
+-   **Qué representa:** una “fotografía” del proyecto en un momento dado.
+-   **Contenido:**
+
+    -   Referencia al tree raíz del proyecto.
+    -   Referencias a commits padres.
+    -   Autor, fecha, mensaje.
+
+-   **Hash:** SHA-1 calculado sobre todo el contenido del commit.
+-   **Ejemplo visual:**
+
+```
+Commit 123abc...
+tree a1b2c3d4e5f6g7h8i9j0
+author Fede <fede@mail.com> 1695532800 +0000
+committer Fede <fede@mail.com> 1695532800 +0000
+```
+
+Primer commit
+
+## Tag
+
+-   **Qué representa:** un puntero inmutable a un commit específico.
+-   **Contenido:**
+
+    -   Referencia al commit.
+    -   Opcional: nombre del creador, fecha y mensaje de versión.
+
+-   **Ejemplo visual:**
+
+Tag: v1.0
+Apunta a commit: 123abc...
+Mensaje: "Primera versión estable"
+
+-   Cada commit puede tener **uno o más padres** (merge).
+-   Las ramas son **punteros a commits**.
+-   Tags son **punteros inmutables a commits**.
+
+# Comandos internos de Git (avanzados)
+
+-   `git hash-object -w archivo` → genera un hash de tipo BLOB.
+-   `git update-index --add --cacheinfo 001000 hash nombreArchivo` → agrega un archivo al índice (staging).
+
+    -   Si el archivo está en una ruta como `src/archivo.txt`, Git crea automáticamente los trees necesarios.
+
+-   `git write-tree` → genera el hash del índice actual.
+-   `git cat-file -p hash` → inspecciona el contenido de un objeto por su hash.
+
+# Referencias y punteros
+
+-   **Ramas (branches):**
+
+    -   Son punteros a commits.
+    -   Permiten trabajar en paralelo sin afectar la rama principal.
+
+-   **HEAD:**
+
+    -   Puntero especial que indica la rama en la que estás trabajando actualmente.
+
+-   **Tags:**
+
+    -   Punteros inmutables que señalan commits específicos, normalmente para marcar versiones (`v1.0`, `v2.1`).
