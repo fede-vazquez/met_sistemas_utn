@@ -53,11 +53,9 @@ Git organiza el flujo de trabajo en tres áreas principales:
 
 Perfecto, Fede. Te agrego cómo se **ven internamente** estos objetos en Git y cómo se relacionan entre sí:
 
----
-
 # Tipos de objetos en Git y su estructura
 
-## 1️⃣ Blob
+## Blob
 
 -   **Qué representa:** un archivo individual (cualquier extensión).
 -   **Contenido:** solo guarda los datos del archivo, **no el nombre ni la ruta**.
@@ -68,9 +66,7 @@ Perfecto, Fede. Te agrego cómo se **ven internamente** estos objetos en Git y c
 hash: f30ab...
 ```
 
----
-
-## 2️⃣ Tree
+## Tree
 
 -   **Qué representa:** un directorio.
 -   **Contenido:** referencias a blobs (archivos) y a otros trees (subdirectorios).
