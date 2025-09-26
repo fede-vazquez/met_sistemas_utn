@@ -85,3 +85,10 @@ Ejemplo visual:
     ```
 
 Esto se usa en equipos porque deja un historial más claro de que existió una rama `feature`.
+
+# Rebase
+
+En general, esto se refiere a cambiar el parent/base de un commit.
+Los commits no se modifican, se crean nuevos commits calculando la diferencia con el nuevo padre que tendrá la rama, calcula las diferencias usando el three-way merge y crea un nuevo commit, con el mismo mensaje, pero su padre será el nuevo.
+
+En caso de tener algún conflicto, el rebase queda en pausa hasta que los soluciones y le digas a la consola de continuar.
