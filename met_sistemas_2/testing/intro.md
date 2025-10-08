@@ -1,37 +1,60 @@
 # Testing
 
-## Verificar vs validar
+## Verificar vs Validar
 
-Verificar es ver que algo funcione, validar es ver que devuelva lo esperado.
+- **Verificar** consiste en comprobar que el sistema o módulo **funcione correctamente** según su diseño técnico.
 
-## Tipos de testing
+  > Ejemplo: verificar que un botón guarde un registro en la base de datos.
 
-- Unitarias
-  Tienen que ser rápidas y más simples posibles, probando la lógica de un modulo, sin depender de otros tests.
-- Integración:
-  Es probar una funcionalidad completa, que contiene varios pasos.
-- Sistema:
-  Prueba el sistema completo.
-- Smoke:
-  Son pruebas simples que se hacen para ver si funciona, verificando lo básico (lo básico depende de cada sistema)
-- Regression:
-  Corrobora si no se rompió algo viejo, sirve integración continua.
-- Caja negra:
-  Se diseñan pruebas sin mirar el código.
-- Caja blanca:
-  Testea que todo el código este correcto, mirando que se puedan recorrer todos los caminos del mismo.
+- **Validar** implica comprobar que el sistema **cumpla con lo que el usuario espera** o con los requisitos del negocio.
 
-## Plan de testing
+  > Ejemplo: validar que el registro guardado contenga los datos correctos y siga las reglas del negocio.
 
-Para cada tipo se tiene que planificar
+## Tipos de Testing
+
+- **Unitarias:**
+  Prueban pequeñas partes del sistema (funciones, clases o métodos) de forma **aislada**.
+  Deben ser rápidas, simples y no depender de otros tests.
+
+- **Integración:**
+  Evalúan la interacción entre **múltiples módulos o componentes**, verificando que trabajen correctamente en conjunto.
+
+- **Sistema:**
+  Se prueban **todas las funcionalidades del sistema completo**, asegurando que funcione como un todo coherente.
+
+- **Smoke (Humo):**
+  Son pruebas **rápidas y básicas** que confirman si el sistema “enciende” o si algo está roto antes de hacer pruebas más complejas.
+
+  > “¿Arranca el sistema sin errores críticos?”
+
+- **Regresión:**
+  Aseguran que las nuevas funcionalidades **no rompan** las ya existentes.
+  Son esenciales en procesos de **integración continua (CI)**.
+
+- **Caja negra:**
+  Se diseñan pruebas **sin mirar el código**, solo considerando entradas y salidas.
+  Se centra en el comportamiento del sistema.
+
+- **Caja blanca:**
+  Evalúan el **interior del código**, verificando que todos los caminos y condiciones posibles se ejecuten al menos una vez.
+
+## Plan de Testing
+
+Cada tipo de test debe tener su **plan de pruebas**, que defina:
+
+- Qué se va a probar.
+- Qué datos de entrada se usarán.
+- Qué resultados se esperan.
+- Cómo se evaluará el éxito o el fallo.
 
 ### Tipos de valores
 
-- Normales y limites
-  Son los valores que son correctos y los que están fuera.
-  Ejemplo: Si un valor va entre 0 a 100, el normal sería entre estos y los limites los que están fuera.
+- **Normales y límites:**
+  Se deben considerar tanto los valores **válidos** como los **extremos o inválidos**.
 
-### coverage
+  > Ejemplo: si un campo acepta valores entre 0 y 100, se deben probar casos como -1, 0, 50, 100 y 101.
 
-Son los caminos posibles que tiene el sistema.
-La idea es tener el 100% del mismo.
+### Coverage (Cobertura)
+
+La **cobertura** mide qué porcentaje del código o de los caminos posibles fue probado.
+El objetivo ideal es alcanzar el **100% de cobertura**, aunque en la práctica se priorizan las partes **más críticas** del sistema.
